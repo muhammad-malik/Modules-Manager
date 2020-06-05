@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <%- include('../includes/jumbotron.ejs') %>
+
+    <div class="fullscreen-wrapper">
+        <div class="container">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Create a New Module</div>
+                <div class="panel-body">
+                    <p>Create a new module for your department using the module specification template.</p>
+                    <a href="/edit/modules/moduleSpec/base/New" class="btn btn-primary" role="button">Create a New
+                        Module</a>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                    <div class="panel-heading">Create a New Degree Programme</div>
+                    <div class="panel-body">
+                        <p>Create a new degree programme for your department using the programme specification template.</p>
+                        <a href="/edit/programmes/programmeSpec/base/New" class="btn btn-primary" role="button">Create a New
+                            Programme</a>
+                    </div>
+                </div>
+
+            <a href="/modules" class="btn btn-primary" role="button">View Modules List</a>
+            <a href="/programmes" class="btn btn-primary" role="button">View Programmes List</a>
+        </div>
+    </div>
+
+    <div class="screen-fill"></div>
+    <%- include('../includes/end.ejs') %>

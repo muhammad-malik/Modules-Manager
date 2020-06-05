@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="container">
+        <% if (approvedSubs.length > 0) { %>
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Approved Submissions List</div>
+            <div class="panel-body">
+                <ul>
+                    <li>You can view all submission which have been approved.</li>
+                    <li>All submission which belongs to same <%= pageType %> and are for same year are displayed in a single
+                        card.</li>
+                    <li>You can generate the <%= pageType %> files by clicking on "Generate File" button which will take the
+                        <%= pageType %> version on which the edits were made on and apply these edits and make the JSON file in
+                        the correct folder</li>
+                </ul>
+            </div>
+        </div>
+
+        <% for (let approved of approvedSubs.reverse()) { %>
+        <article class="card">
+            <header class="card__header">
+
+                <label class="inlineCardTitle">Code: <%= approved.code %></label>
+
+                <div class="rightFloat">
+                    <label class="inlineCardTitle">Type: <%= approved.typeOfEdit %></label>
+                </div></br>
+
+                <label class="inlineCardTitle">Year Of Study: <%= approved.year %></label>
+                <div class="rightFloat">
+                    <label class="inlineCardTitle">Status: <%= approved.status %></label>
+                </div></br>
+                </br>
+
+                <% for (let i=0; i<approved.submissions.length; i++) { %>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                                href="<%= '#collapse'+approved.submissions[i]._id+i %>">Submission <%= i+1 %>
+                                <div class="small pull-right">Submitted on: <%= approved.submissions[i].date %></div>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="<%= 'collapse'+approved.submissions[i]._id+i %>" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h4>Edits proposed in this submission:</h4>
+                            <% if (approved.submissionType === "module") { %>
+                            <%- include('../includes/module-rep.ejs', {module: JSON.parse(approved.submissions[i].data)}) %>
+                            <% } else { %>
+                            <%- include('../includes/programme-rep.ejs', {programme: JSON.parse(approved.submissions[i].data)}) %>
+                            <% } %>
+                            <div class="pull-right">
+                                <a href="<%= '/view/submissions/'+approved.submissions[i]._id+'/'+approved.submissionType %>"
+                                    class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+
+                <form class="form-inline" method="POST">
+
+                    <% if (approved.typeOfEdit === 'New') { %>
+                    <% if (approved.status === 'File Generated') { %>
+                    <div class="text-right">
+                        File Generated On: <%= approved.fileGeneratedOn %>
+                    </div>
+                    <% } else { %>
+                    <button type="submit" formaction="<%= '/generate-new-'+approved.submissionType+'-file/'+approved.id+'/'+approved.submissionType %>"
+                        class="btn btn-success">Generate File</button>
+                    <% } %>
+                    <% } else { %>
+                    <button type="submit" formaction="<%= '/generate-updated-'+approved.submissionType+'-file/'+approved.id+'/'+approved.submissionType %>"
+                        class="btn btn-success">Generate File</button>
+                    <% if (approved.status === 'File Generated') { %>
+                    <div class="Large pull-right">
+                        <p></p>
+                        File Generated On: <%= approved.fileGeneratedOn %>
+                    </div>
+                    <% } %>
+                    <% } %>
+
+                    <% if (approved.status != 'File Generated') { %>
+                    <button type="submit" formaction="<%= '/delete-approved/'+approved._id+'/'+approved.submissionType %>"
+                        class="btn btn-danger">Delete</button>
+                    <% } %>
+
+
+                </form>
+
+            </header>
+        </article>
+        <% } %>
+        <% } else { %>
+        <h1>No Approved Submissions Found!</h1>
+        <% } %>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

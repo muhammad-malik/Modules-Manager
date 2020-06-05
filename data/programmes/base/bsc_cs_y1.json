@@ -1,0 +1,26 @@
+{
+  "title": "BSc/MSci Computer Science (Year 1)",
+  "code": "bsc_cs_y1",
+  "director": {
+    "name": "Andrew Coles",
+    "email": "andrew.coles@kcl.ac.uk"
+  },
+  "num_modules": 7,
+  "modules": {
+    "Compulsory": [
+      "4CCS1PPA",
+      "4CCS1FC1",
+      "4CCS1CS1",
+      "4CCS1ELA",
+      "4CCS1DST",
+      "4CCS1DBS",
+      "4CCS1ISE"
+    ],
+    "Optional replacement for 4CCS1ELA (semester 1)": [
+      "4CCP1351"
+    ],
+    "Optional replacement for 4CCS1ISE (semester 2)": [
+      "4CCS1LOD"
+    ]
+  }
+}

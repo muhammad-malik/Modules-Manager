@@ -1,0 +1,106 @@
+<% for (let key of (Object.keys(module)).sort()) { %>
+
+<% if (JSON.stringify(module[key]) === JSON.stringify({})  ) { %>
+<b><%= key %></b>: {}<br>
+
+<% } else if (key === "accreditation") { %>
+
+
+<% } else if (key === "assessment") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let key2 of (Object.keys(module.assessment)) ) { %>
+    <b><%= key2 %></b>:<br>
+    <div class="sub-item">
+        <% for (let key3 of (Object.keys(module.assessment[key2])) ) { %>
+        <b><%= key3 %></b>: <%= module.assessment[key2][key3] %><br>
+        <% }%>
+    </div>
+    <% }%>
+</div>
+
+
+<% } else if (key === "assessment_timetable") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let key2 of (Object.keys(module.assessment_timetable)) ) { %>
+    <b><%= key2 %></b>:<br>
+    <div class="sub-item">
+        <% for (let key3 of (Object.keys(module.assessment_timetable[key2])) ) { %>
+        <b><%= key3 %></b>: <%= module.assessment_timetable[key2][key3] %><br>
+        <% }%>
+    </div>
+    <% }%>
+</div>
+
+
+<% } else if (key === "lecturers") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let lect of module.lecturers) { %>
+    <b>name</b>: <%= lect.name %><br>
+    <b>email</b>: <%= lect.email %><br><br>
+    <% } %>
+</div>
+
+
+<% } else if (key === "objectives") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let objective of module.objectives) { %>
+    <b>subheading</b>: <%= objective.subheading %><br>
+    <b>items</b>:<br>
+    <div class="sub-item">
+        <% for (let key2 of Object.keys(objective.items)) { %>
+        <b><%= key2 %></b>: <%= objective.items[key2] %><br>
+        <% } %>
+    </div>
+    <% } %>
+</div>
+
+
+<% } else if (key === "topics") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let key2 of Object.keys(module.topics)) { %>
+    <b><%= key2 %></b>:<br>
+    <div class="sub-item">
+        <b>objectives</b>: <%= module.topics[key2].objectives %><br>
+        <b>week</b>: <%= module.topics[key2].week %><br>
+        <b>title</b>: <%= module.topics[key2].title %><br>
+    </div>
+    <% } %>
+</div>
+
+
+<% } else if (key === "prerequisites") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let key2 of Object.keys(module.prerequisites)) { %>
+    <b><%= key2 %></b>: <%= module.prerequisites[key2] %><br>
+    <% } %>
+</div>
+
+
+<% } else { %>
+<b><%= key %></b>: <%= module[key] %> <br>
+<% } %>
+
+<% } %>
+
+<% if (module.hasOwnProperty('accreditation') === true) { %>
+<b>accreditation</b>:<br>
+<div class="sub-item">
+    <b>accreditation_body</b>: <%= module.accreditation[0].accreditation_body %><br>
+    <b>criteria_mapping</b>:<br>
+    <div class="sub-item">
+        <% for (let key2 of (Object.keys(module.accreditation[0].criteria_mapping)) ) { %>
+        <b><%= key2 %></b>:<br>
+        <div class="sub-item">
+            <b>lo</b>: <%= key2.lo %><br>
+            <b>justify</b>: <%= key2.justify %><br>
+        </div>
+        <% }%>
+    </div>
+</div>
+<% } %>

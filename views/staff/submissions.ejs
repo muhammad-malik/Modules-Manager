@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="container">
+
+        <% if (subs.length > 0) { %>
+
+        <br>   
+        <div class="panel panel-primary">
+            <div class="panel-heading">Submissions List</div>
+            <div class="panel-body">
+                <ul>
+                    <li>You can view all submission including their status (i.e. Submitted, Approved or Rejected), type
+                        (i.e. is it a 'New' <%= pageType %> or some 'Edit' made to some existing <%= pageType %>) and the year of study
+                        the submission is proposed for.</li>
+                    <% if (isAdmin) { %>
+                        <li>You can delete any Submitted and Rejected submission.</li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+
+        <% for (let sub of subs.reverse()) { %>
+            <%- include('../includes/submission-card.ejs', {sub: sub}) %>
+        <% } %>
+
+        <% } else { %>
+        <h1>No Submissions Found!</h1>
+        <% } %>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

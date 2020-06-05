@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container-fluid">
+
+        <% if (isData === true) { %>
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Compare different versions of this <%= pageType %></div>
+            <div class="panel-body">
+                <p>Note: You can view older versions of this  <%= pageType %> (left card) and compare it to the latest (right card).</p>
+            </div>
+        </div>
+
+        <article class="card">
+            <header class="card__header">
+                <h3><b>Code</b>: <%= dataInfo.code %>
+                <h4><b>Title</b>: <%= dataInfo.title %></h4>
+                <h4><b>Latest Version</b>: <%= dataInfo.latestVersion %></h4>
+                <h4><b>Previous Versions</b>:
+                    <% if (dataInfo.olderVersions.length === 0) { %>
+                    None
+                    <% } else { %>
+                    <% for (let ver of dataInfo.olderVersions) { %>
+                    <%= ver %>,
+                    <% } %>
+                    <% } %>
+                </h4>
+            </header>
+        </article>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <article class="card">
+                    <header class="card__header">
+
+                        <h3 class="text-center">
+
+                            <% if (dataInfo.olderVersions.indexOf(dataOneVersion)-1 >= 0) { %>
+                            <a href="<%= '/view/'+pageType+'/'+dataInfo.code+'/'+dataInfo.latestVersion+'/'+ dataInfo.olderVersions[dataInfo.olderVersions.indexOf(dataOneVersion)-1] %>"
+                                class="btn btn-link" role="button" ><< Previous</a>
+                            <% } else { %>
+                                <div class="inlineText text-muted"><< Previous</div>
+                            <% } %> 
+
+                            Version: <%= dataOneVersion %>
+
+                            <% if (dataInfo.olderVersions.indexOf(dataOneVersion)+1 < dataInfo.olderVersions.length) { %>
+                            <a href="<%= '/view/'+pageType+'/'+dataInfo.code+'/'+dataInfo.latestVersion+'/'+ dataInfo.olderVersions[dataInfo.olderVersions.indexOf(dataOneVersion)+1] %>"
+                                class="btn btn-link" role="button">Next >></a>
+                            <% } else { %>
+                                <div class="inlineText text-muted"> Next >></div>
+                            <% } %> 
+                        </h3>
+                        <% if (pageType === 'modules') { %>
+                        <%- include('../includes/module-rep.ejs', {module: dataOne}) %>
+                        <% } else { %>
+                        <%- include('../includes/programme-rep.ejs', {programme: dataOne}) %>
+                        <% } %>
+                    </header>
+                </article>
+            </div>
+            <div class="col-sm-6">
+                <article class="card">
+                    <header class="card__header">
+                        <h3 class="text-center">Version: <%= datTwoVersion %></h3>
+                        <% if (pageType === 'modules') { %>
+                        <%- include('../includes/module-rep.ejs', {module: dataTwo}) %> 
+                        <% } else { %>
+                        <%- include('../includes/programme-rep.ejs', {programme: dataOne}) %>
+                        <% } %>
+                    </header>
+                </article>
+            </div>
+        </div>
+
+        <% } else { %>
+        <h1>No  <%= pageType %> selected!</h1>
+        <% } %>
+    </div>
+    <br><br><br>
+
+    <%- include('../includes/end.ejs') %>

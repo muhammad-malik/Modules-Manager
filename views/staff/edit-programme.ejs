@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container">
+        <form action="/edit-programme" method="POST">
+            <article class="card">
+                <header class="card__header">
+                    <label for="currentVersion">Current Version: <%= version %></label><br>
+                    <input type="hidden" name="currentVersion" value="<%= version %>" />
+
+                    <label for="type">Type of change: <%= type %></label><br>
+                    <input type="hidden" name="type" value="<%= type %>" />
+
+                    <label for="year">Year of Study:
+                        <select name="year">
+                            <option value="2018-2019">2018-2019</option>
+                            <option value="2019-2020">2019-2020</option>
+                            <option value="2020-2021">2020-2021</option>
+                            <option value="2021-2022">2021-2022</option>
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                            <option value="2026-2027">2026-2027</option>
+                            <option value="2027-2028">2027-2028</option>
+                            <option value="2028-2029">2028-2029</option>
+                            <option value="2029-2030">2029-2030</option>
+                        </select>
+                    </label>
+
+                </header>
+            </article>
+
+            <article class="card">
+                <header class="card__header">
+
+                    <% if (type === 'New') { %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'title', fieldLabel: 'Title', inputValue: data['title']}) %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'code', fieldLabel: 'Code', inputValue: data['code']}) %>
+                    <% } else { %>
+                    <%- include('../includes/form-input-readonly.ejs', {inputName: 'title', fieldLabel: 'Title', inputValue: data['title']}) %>
+                    <%- include('../includes/form-input-readonly.ejs', {inputName: 'code', fieldLabel: 'Code', inputValue: data['code']}) %>
+                    <% } %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'numOfModules', fieldLabel: 'Number of Modules', inputValue: data['num_modules']}) %>
+
+                    <label>Director</label>
+                    <div class="sub-item">
+                        <%- include('../includes/form-input.ejs', {inputName: 'directorName', fieldLabel: 'Name', inputValue: data.director['name']}) %>
+                        <%- include('../includes/form-input.ejs', {inputName: 'directorEmail', fieldLabel: 'Email', inputValue: data.director['email']}) %>
+                    </div>
+
+                    <label>Modules</label>
+                    <div class="sub-item">
+                        <% for (let i=0; i<4; i++) { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseModules'+i %>">Modules Type <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseModules'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'modules'+i, fieldLabel: 'Key', inputValue: (modulesKeys.length>=i+1)? modulesKeys[i] : ''}) %>
+
+                                    <div class="sub-item">
+                                        <div class="form-group">
+                                            <% for (let j=0; j<12; j++) { %>
+                                            <input class="form-control" type="text" name="<%= 'modules'+i+'obj'+j %>"
+                                                id="<%= 'modules'+i+'obj'+j %>"
+                                                value="<%= (modulesKeys.length>=i+1)? (data.modules[modulesKeys[i]].length>=j+1)? data.modules[modulesKeys[i]][j] : '' : ''%>">
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+
+                </header>
+            </article>
+
+            <article class="card">
+                <header class="card__header">
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'note', fieldLabel: 'Any Notes for Admin', inputValue: '', rowsNumber: 4}) %>
+                </header>
+            </article>
+
+            <button class="btn btn-primary" type="submit">Submit Changes</button>
+        </form>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

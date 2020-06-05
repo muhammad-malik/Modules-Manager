@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container">
+        <form action="/edit-module" method="POST">
+            <article class="card">
+                <header class="card__header">
+                    <label for="currentVersion">Current Version: <%= version %></label><br>
+                    <input type="hidden" name="currentVersion" value="<%= version %>" />
+
+                    <label for="type">Type of change: <%= type %></label><br>
+                    <input type="hidden" name="type" value="<%= type %>" />
+
+                    <label for="year">Year of Study:
+                        <select name="year">
+                            <option value="2018-2019">2018-2019</option>
+                            <option value="2019-2020">2019-2020</option>
+                            <option value="2020-2021">2020-2021</option>
+                            <option value="2021-2022">2021-2022</option>
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                            <option value="2026-2027">2026-2027</option>
+                            <option value="2027-2028">2027-2028</option>
+                            <option value="2028-2029">2028-2029</option>
+                            <option value="2029-2030">2029-2030</option>
+                        </select>
+                    </label>
+
+                </header>
+            </article>
+
+            <article class="card">
+                <header class="card__header">
+
+                    <% if (type === 'New') { %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'title', fieldLabel: 'Title', inputValue: data['title']}) %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'code', fieldLabel: 'Code', inputValue: data['code']}) %>
+                    <% } else { %>
+                    <%- include('../includes/form-input-readonly.ejs', {inputName: 'title', fieldLabel: 'Title', inputValue: data['title']}) %>
+                    <%- include('../includes/form-input-readonly.ejs', {inputName: 'code', fieldLabel: 'Code', inputValue: data['code']}) %>
+                    <% } %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'credits', fieldLabel: 'Credits', inputValue: data['credits']}) %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'semester', fieldLabel: 'Semester', inputValue: data['semester']}) %>
+                    <%- include('../includes/form-input.ejs', {inputName: 'studyAbroad', fieldLabel: 'Study Abroad', inputValue: data['study_abroad']}) %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'teachingPattern', fieldLabel: 'Teaching Pattern', inputValue: data['teachingpattern'], rowsNumber: 1}) %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'aims', fieldLabel: 'Aims', inputValue: data['aims'], rowsNumber: 4}) %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'syllabus', fieldLabel: 'Syllabus', inputValue: data['syllabus'], rowsNumber: 4}) %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'deliveryNotes', fieldLabel: 'Delivery Notes', inputValue: data['deliverynotes'], rowsNumber: 4}) %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'assessmentDetails', fieldLabel: 'Assessment Details', inputValue: data['assessment_details'], rowsNumber: 4}) %>
+
+                    <label>Lecturers</label>
+                    <div class="sub-item">
+                        <% for (let i=0; i<4; i++)  { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseLecturer'+i %>">Lecturer <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseLecturer'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'lecturer'+i+'Name', fieldLabel: 'Name', inputValue: (data['lecturers'][i] != undefined) ? data['lecturers'][i].name : ''}) %>
+                                    <%- include('../includes/form-input.ejs', {inputName: 'lecturer'+i+'Email', fieldLabel: 'Email', inputValue: (data['lecturers'][i] != undefined) ? data['lecturers'][i].email : ''}) %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+
+
+                    <label>Objectives</label>
+                    <div class="sub-item">
+                        <% for (let i=0; i<3; i++)  { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseObjective'+i %>">Objective <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseObjective'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'objective'+i+'Subheading' , fieldLabel: 'Subheading', inputValue:  (data['objectives'][i] != undefined) ? data['objectives'][i].subheading : ''}) %>
+                                    <label>Items</label>
+                                    <div class="sub-item">
+                                        <% for (let j=1; j<=10; j++)  { %>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <%- include('../includes/form-input.ejs', {inputName: 'obj'+i+'itemKey'+j, fieldLabel: 'Key', inputValue: (objectiveItemKeys[i].length>=j) ? objectiveItemKeys[i][j-1] : '' }) %>
+
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <%- include('../includes/form-input.ejs', {inputName: 'obj'+i+'itemValue'+j, fieldLabel: 'Value', inputValue:  (objectiveItemKeys[i].length>=j) ? data.objectives[i].items[objectiveItemKeys[i][j-1]] : ''}) %>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }%>
+                    </div>
+
+
+                    <label>Topics</label>
+                    <div class="sub-item">
+                        <% for (let i=1; i<=12; i++)  { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseTopic'+i %>">Topic <%= i %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseTopic'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <label><%= 't'+i %></label>
+                                    <div class="sub-item">
+                                        <%- include('../includes/form-input.ejs', {inputName: 't'+i+'objectives', fieldLabel: 'Objectives', inputValue: (data['topics']['t'+i] != undefined) ? data['topics']['t'+i].objectives : '' }) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 't'+i+'week', fieldLabel: 'Week', inputValue: (data['topics']['t'+i] != undefined) ? data['topics']['t'+i].week : '' }) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 't'+i+'title', fieldLabel: 'Title', inputValue: (data['topics']['t'+i] != undefined) ? data['topics']['t'+i].title : '' }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <label>Assessment</label>
+                    <% for (let i=0; i<6; i++)  { %>
+                    <div class="sub-item">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseAssessment'+i %>">Assessment <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseAssessment'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'Type', fieldLabel: 'Key', inputValue: (assessmentKeys.length>=i+1)? assessmentKeys[i] : '' }) %>
+                                    <div class="sub-item">
+                                        <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'Name', fieldLabel: 'Name', inputValue: (assessmentKeys.length>=i+1)? (data.assessment[assessmentKeys[i]].name != undefined)? data.assessment[assessmentKeys[i]].name : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'Weight', fieldLabel: 'Weight', inputValue: (assessmentKeys.length>=i+1)? (data.assessment[assessmentKeys[i]].weight != undefined)? data.assessment[assessmentKeys[i]].weight : '' : '' }) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'Extra', fieldLabel: 'Extra', inputValue: (assessmentKeys.length>=i+1)? (data.assessment[assessmentKeys[i]].extra != undefined)? data.assessment[assessmentKeys[i]].extra : '' : '' }) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'QualifyingMark', fieldLabel: 'Qualifying Mark', inputValue: (assessmentKeys.length>=i+1)? (data.assessment[assessmentKeys[i]].qualifyingmark != undefined)? data.assessment[assessmentKeys[i]].qualifyingmark : '' : '' }) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'assessment'+i+'Reassessment', fieldLabel: 'Reassessment', inputValue: (assessmentKeys.length>=i+1)? (data.assessment[assessmentKeys[i]].reassessment != undefined)? data.assessment[assessmentKeys[i]].reassessment : '' : '' }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <label>Prerequisites</label>
+                    <div class="sub-item">
+                        <% for (let i=0; i<3; i++)  { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapsePrerequisite'+i %>">Prerequisite <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapsePrerequisite'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <%- include('../includes/form-input.ejs', {inputName: 'p'+i+'Key', fieldLabel: 'Key', inputValue: (prerequisitesKeys.length >= i+1)? prerequisitesKeys[0] : ''}) %>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <%- include('../includes/form-input.ejs', {inputName: 'p'+i+'Value', fieldLabel: 'Value', inputValue: (prerequisitesKeys.length >= i+1)? data['prerequisites'][prerequisitesKeys[0]] : ''}) %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <label>Assessment Timetable</label>
+                    <% for (let i=0; i<25; i++)  { %>
+                    <div class="sub-item">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="<%= '#collapseAssessmentT'+i %>">Assessment <%= i+1 %></a>
+                                </h4>
+                            </div>
+                            <div id="<%= 'collapseAssessmentT'+i %>" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'key', fieldLabel: 'Key', inputValue: (assessmentTimetableKeys.length>=i+1)? assessmentTimetableKeys[i] : '' }) %>
+                                    <div class="sub-item">
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Weight', fieldLabel: 'Weight', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].weight != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].weight : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Objectives', fieldLabel: 'Objectives', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].objectives != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].objectives : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Type', fieldLabel: 'Type', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].type != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].type : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'HWFS', fieldLabel: 'Hours work for Student', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].hours_work_for_student != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].hours_work_for_student : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'FWFL', fieldLabel: 'Fixed work for Lecturer', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_lecturer != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_lecturer : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'PSWFL', fieldLabel: 'Per-Student work for Lecturer', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_lecturer != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_lecturer : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'FWFTA', fieldLabel: 'Fixed work for TA', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_ta != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_ta : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'PSWFTA', fieldLabel: 'Per-Student work for TA', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_ta != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_ta : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'FWFPS', fieldLabel: 'Fixed work for PS', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_ps != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].fixed_work_for_ps : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'PSWFPS', fieldLabel: 'Per-Student work for PS', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_ps != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].per_student_work_for_ps : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Released', fieldLabel: 'Released', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].released != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].released : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Due', fieldLabel: 'Due', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].due != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].due : '' : ''}) %>
+                                        <%- include('../includes/form-input.ejs', {inputName: 'at'+i+'Feedback', fieldLabel: 'Feedback', inputValue: (assessmentTimetableKeys.length>=i+1)? (data.assessment_timetable[assessmentTimetableKeys[i]].feedback != undefined)? data.assessment_timetable[assessmentTimetableKeys[i]].feedback : '' : ''}) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <label>Accreditation</label>
+                    <div class="sub-item">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseAccreditation1">Accreditation 1</a>
+                                </h4>
+                            </div>
+                            <div id="collapseAccreditation1" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'accreditationOneBody', fieldLabel: 'Accreditation Body', inputValue: (accreditationLength>=1)? data.accreditation[0].accreditation_body : '' }) %>
+                                    <label>Criteria Mapping</label>
+                                    <div class="sub-item">
+                                        <% for (let j=0; j<15; j++)  { %>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                        href="<%= '#collapseA1C'+j %>">Criteria <%= j+1 %></a>
+                                                </h4>
+                                            </div>
+                                            <div id="<%= 'collapseA1C'+j %>" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <%- include('../includes/form-input.ejs', {inputName: 'aOneCriteria'+j+'Key', fieldLabel: 'Key', inputValue: (accreditationOneCriteriaKeys.length>=j+1)? accreditationOneCriteriaKeys[j] : '' }) %>
+
+                                                    <div class="sub-item">
+                                                        <%- include('../includes/form-input.ejs', {inputName: 'A1C'+j+'lo', fieldLabel: 'LO', inputValue: (accreditationOneCriteriaKeys.length>=j+1)? data.accreditation[0].criteria_mapping[accreditationOneCriteriaKeys[j]].lo : '' }) %>
+                                                        <%- include('../includes/form-input.ejs', {inputName: 'A1C'+j+'justify', fieldLabel: 'Justify', inputValue: (accreditationOneCriteriaKeys.length>=j+1)? data.accreditation[0].criteria_mapping[accreditationOneCriteriaKeys[j]].justify : '' }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseAccreditation2">Accreditation 2</a>
+                                </h4>
+                            </div>
+                            <div id="collapseAccreditation2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <%- include('../includes/form-input.ejs', {inputName: 'accreditationTwoBody', fieldLabel: 'Accreditation Body', inputValue: (accreditationLength>=2)? data.accreditation[1].accreditation_body : '' }) %>
+                                    <label>Criteria Mapping</label>
+                                    <div class="sub-item">
+                                        <% for (let j=0; j<24; j++)  { %>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                        href="<%= '#collapseA2C'+j %>">Criteria <%= j+1 %></a>
+                                                </h4>
+                                            </div>
+                                            <div id="<%= 'collapseA2C'+j %>" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <%- include('../includes/form-input.ejs', {inputName: 'aTwoCriteria'+j+'Key', fieldLabel: 'Key', inputValue: (accreditationTwoCriteriaKeys.length>=j+1)? accreditationTwoCriteriaKeys[j] : '' }) %>
+
+                                                    <div class="sub-item">
+                                                        <%- include('../includes/form-input.ejs', {inputName: 'A2C'+j+'lo', fieldLabel: 'LO', inputValue: (accreditationTwoCriteriaKeys.length>=j+1)? data.accreditation[1].criteria_mapping[accreditationTwoCriteriaKeys[j]].lo : '' }) %>
+                                                        <%- include('../includes/form-input.ejs', {inputName: 'A2C'+j+'justify', fieldLabel: 'Justify', inputValue: (accreditationTwoCriteriaKeys.length>=j+1)? data.accreditation[1].criteria_mapping[accreditationTwoCriteriaKeys[j]].justify : '' }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </header>
+            </article>
+
+            <article class="card">
+                <header class="card__header">
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'note', fieldLabel: 'Any Notes for Admin', inputValue: '', rowsNumber: 4}) %>
+                </header>
+            </article>
+
+            <button class="btn btn-primary" type="submit">Submit Changes</button>
+        </form>
+    </div>
+
+    <%- include('../includes/end.ejs') %>

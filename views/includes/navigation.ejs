@@ -1,0 +1,34 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">AISPEC</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="<%= path === '/' ? 'active' : '' %>"><a href="/">Home</a></li>
+                <li class="<%= path === '/modules' ? 'active' : '' %>"><a href="/modules">Modules</a></li>
+                <li class="<%= path === '/programmes' ? 'active' : '' %>"><a href="/programmes">Programmes</a></li>
+                <li class="<%= path === '/modSubmissions' ? 'active' : '' %>"><a href="/submissions/module">Module Submissions</a></li>
+                <li class="<%= path === '/progSubmissions' ? 'active' : '' %>"><a href="/submissions/programme">Programme Submissions</a></li>
+                <% if (isAdmin) { %> 
+                    <li class="<%= path === '/approvedMod' ? 'active' : '' %>"><a href="/approved/module">Approved Modules</a></li>
+                    <li class="<%= path === '/approvedProg' ? 'active' : '' %>"><a href="/approved/programme">Approved Programmes</a></li>
+
+                <% } %>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a><%= isAdmin ? 'Admin' : 'Staff'%> View</a></li>
+                <li class="dropdown-header">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Change User Type
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/change-user/staff">Staff</a></li>
+                            <li><a href="/change-user/admin">Admin</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

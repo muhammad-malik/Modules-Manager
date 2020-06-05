@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <div class="container">
+
+        <% if (dataList.length > 0) { %>
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading text-capitalize"><%= pageType %> List</div>
+            <div class="panel-body">
+                <ul>
+                    <li>You can view different versions of the <%= pageType %> by clicking on the View button.</li>
+                    <li>You can make edits to the latest version of a <%= pageType %>.</li>
+                </ul> 
+            </div>
+        </div>
+
+        <% for (let data of dataList) { %>
+        <article class="card">
+            <header class="card__header">
+                <div class="inlineCardTitle"><%= data.code %> - <%= data.title %></div>
+                <div class="rightFloat">
+                    <a href="<%= '/view/'+pageType+'/'+data.code+'/'+data.latestVersion+'/'+ ((data.olderVersions.length) ? data.olderVersions[data.olderVersions.length-1] : data.latestVersion) %>"
+                        class="btn btn-primary" role="button">View</a>
+                    <a href="<%= '/edit/'+pageType+'/'+data.code+'/'+data.latestVersion+'/Edit' %>" class="btn btn-primary"
+                        role="button">Edit</a>
+                </div>
+                <p>Latest version: <%= data.latestVersion %></p>
+            </header>
+        </article>
+        <% } %>
+
+        <% } else { %>
+        <h1>No <%= pageType %> Found!</h1>
+        <% } %>
+    </div>
+
+
+    <%- include('../includes/end.ejs') %>

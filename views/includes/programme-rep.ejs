@@ -1,0 +1,30 @@
+<% for (let key of (Object.keys(programme))) { %>
+
+<% if (JSON.stringify(programme[key]) === JSON.stringify({})  ) { %>
+<b><%= key %></b>: {}<br>
+
+<% } else if (key === "director") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <b>name</b>: <%= programme[key].name %><br>
+    <b>email</b>: <%= programme[key].email %>
+</div>
+
+<% } else if (key === "modules") { %>
+<b><%= key %></b>:<br>
+<div class="sub-item">
+    <% for (let key2 of (Object.keys(programme.modules)) ) { %>
+    <b><%= key2 %></b>:<br>
+    <div class="sub-item">
+        <% for (let module of programme.modules[key2]) { %>
+        <%= module %><br>
+        <% }%>
+    </div>
+    <% }%>
+</div>
+
+<% } else { %>
+<b><%= key %></b>: <%= programme[key] %> <br>
+<% } %>
+
+<% } %>

@@ -1,0 +1,142 @@
+{
+  "semester": "2",
+  "code": "4CCS1DBS",
+  "assessment": {
+    "examination": {
+      "name": "Examination",
+      "weight": "85%",
+      "extra": "2 hours"
+    },
+    "coursework": {
+      "name": "Coursework",
+      "weight": "15%",
+      "reassessment": "Examination"
+    }
+  },
+  "title": "Database Systems",
+  "teachingpattern": [
+    "&nbsp;3-hour lecture (weekly); 2-hour practical session (alternate weeks)"
+  ],
+  "lecturers": [
+    {
+      "name": "Dr Sophia Tsoka",
+      "email": "sophia.tsoka@kcl.ac.uk"
+    },
+    {
+      "name": "Dr Brendan Michael",
+      "email": "brendan.michael@kcl.ac.uk"
+    }
+  ],
+  "aims": "The aim of this module is to introduce the theoreatical foundations of database systems and the main concepts underlying practical organisation and management of such systems.",
+  "objectives": [
+    {
+      "subheading": "",
+      "items": {
+        "DBS1": "appreciate the importance of database systems in information management",
+        "DBS2": "be able to design and query a relational database",
+        "DBS3": "have some experience with translating natural language queries into a logical formalism",
+        "DBS4": "be able to create and manage an SQL database",
+        "DBS5": "will have an understanding of some key concepts in database administration"
+      }
+    }
+  ],
+  "syllabus": "<p>This module covers the following topics:</p><ul><li>Introduction to database systems</li><li>Database Administration: basic concepts, database recovery</li><li>Entity-relationship modelling</li><li>A relational model of data</li><li>Functional dependencies and normal forms</li><li>Relations, model constraints, relational algebra</li><li>SQL</li></ul>",
+  "topics": {},
+  "prerequisites": {},
+  "compulsoriness": {},
+  "assessment_details": "",
+  "assessment_timetable": {
+    "examination": {
+      "weight": "0.85",
+      "objectives": "DBS1,DBS2,DBS3,DBS4,DBS5",
+      "type": "examination",
+      "hours_work_for_student": "2",
+      "released": "May",
+      "due": "Exam",
+      "feedback": "Exam + 4 weeks"
+    }
+  },
+  "accreditation": [
+    {
+      "accreditation_body": "BCS",
+      "criteria_mapping": {
+        "2.1.1": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.1.2": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.1.3": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.1.5": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.1.9": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.2.1": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.2.2": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.2.3": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.2.4": {
+          "lo": "",
+          "justify": ""
+        },
+        "2.3.2": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.1.2": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.1.3": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.1.4": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.2.1": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.2.2": {
+          "lo": "",
+          "justify": ""
+        },
+        "3.2.3": {
+          "lo": "",
+          "justify": ""
+        },
+        "4.1.3": {
+          "lo": "",
+          "justify": ""
+        },
+        "4.2.1": {
+          "lo": "",
+          "justify": ""
+        },
+        "4.2.2": {
+          "lo": "",
+          "justify": ""
+        }
+      }
+    }
+  ]
+}

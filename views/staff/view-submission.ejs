@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="container">
+
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Information</div>
+            <div class="panel-body">
+                <ul>
+                    <li>You can view the status of the submission and the changes proposed in this Submissions.</li>
+                    <li>The left card shows the version on which the changes were made and the right card shows the
+                        things which were changed and submitted.</li>
+                    <% if (isAdmin) { %>
+                    <li>You can approve or reject the submission. Once approved it will be added to the list of approved
+                        submission from where you can apply them.</li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+
+        <article class="card product-item">
+            <header class="card__header">
+                <h3>Module Code: <%= submission.code %></h3>
+                <h4>Edit Made on Version: <%= submission.currentVersion %></h4>
+                <h4>Proposed Study Year: <%= submission.year %></h4>
+                <h4>Type of Edit: <%= submission.typeOfEdit %></h4>
+                <h4>Status: <%= submission.status %></h4>
+                <h4>Date Submitted: <%= submission.date %></h4>
+
+                <% if (submission.note != "") { %>
+                <p>Notes: <%= submission.note %></p>
+                <% } %>
+                <% if (submission.feedback != "") { %>
+                <p>Feedback: <%= submission.feedback %></p>
+                <% } %>
+                <br>
+
+                <% if (showButtons && isAdmin) { %>
+                <form action="" method="POST">
+                    <% if (isAdmin){ %>
+                    <%- include('../includes/form-textarea.ejs', {inputName: 'feedback', fieldLabel: 'Feedback', inputValue: submission.feedback, rowsNumber: 4}) %>
+                    <% } %>
+                    <button type="submit" formaction="<%= '/approve-submission/'+submission._id+'/'+submission.submissionType %>"
+                        class="btn btn-success">Approve</button>
+
+                    <button type="submit" formaction="<%= '/reject-submission/'+submission._id+'/'+submission.submissionType %>"
+                        class="btn btn-danger">Reject</button>
+                </form>
+                <% } %>
+            </header>
+        </article>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <article class="card product-item">
+                    <header class="card__header">
+                        <h3 class="text-center">Original Version</h3>
+                        <% if (pageType==="module") { %>
+                        <%- include('../includes/module-rep.ejs', {module: previousData}) %>
+                        <% } else { %>
+                        <%- include('../includes/programme-rep.ejs', {programme: previousData}) %>
+                        <% } %>
+                    </header>
+                </article>
+            </div>
+            <div class="col-sm-6">
+                <article class="card product-item">
+                    <header class="card__header">
+                        <h3 class="text-center">Edits</h3>
+                        <% if (pageType==="module") { %>
+                        <%- include('../includes/module-rep.ejs', {module: latestData}) %>
+                        <% } else { %>
+                        <%- include('../includes/programme-rep.ejs', {programme: latestData}) %>
+                        <% } %>
+                    </header>
+                </article>
+            </div>
+        </div>
+
+    </div>
+
+    <%- include('../includes/end.ejs') %>

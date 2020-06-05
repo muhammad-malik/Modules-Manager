@@ -1,0 +1,30 @@
+<article class="card">
+    <header class="card__header">
+
+        <label class="inlineCardTitle">Code: <%= sub.code %></label>
+
+        <div class="rightFloat">
+            <label class="inlineCardTitle">Type of Edit: <%= sub.typeOfEdit %></label>
+        </div>
+
+        </br>
+
+        <label class="inlineCardTitle">Year Of Study: <%= sub.year %></label>
+
+        <div class="rightFloat">
+            <label class="inlineCardTitle ">Status: <%= sub.status %></label>
+        </div><br><br>
+
+        <form class="form-inline" action="<%= '/delete-submission/'+sub._id+'/'+sub.submissionType %>" method="POST">
+            <a href="<%= '/view/submissions/'+sub._id+'/'+sub.submissionType %>" class="btn btn-primary">View</a>
+            <% if (isAdmin &&  sub.status != "Approved") { %>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            <% } %>
+            <div class="rightFloat">
+                <br>
+                Date Submitted: <%= sub.date %>
+            </div>
+        </form>
+
+    </header>
+</article>

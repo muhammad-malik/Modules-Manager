@@ -1,0 +1,68 @@
+.navbar {
+  border-radius: 0rem;
+  margin-bottom: 0;
+}
+
+body {
+  height: 100%;
+}
+
+footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+  overflow: hidden;
+  bottom: 0px;
+  position: fixed;
+  width: 100%;
+}
+
+.inlineCardTitle {
+  display: inline;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.inlineText {
+  display: inline;
+  font-size: 1.4rem;
+  margin: 0rem 1rem;
+  vertical-align: center;
+}
+
+.rightFloat {
+  float: right;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 1rem 0rem;
+  width: 100%;
+}
+
+.card__header,
+.card__content {
+  padding: 1rem;
+}
+
+.sub-item {
+  margin-left: 2rem;
+}
+
+.screen-fill {
+  min-height: 100%;
+}
+
+
+.btn {
+  margin: 0.5rem 0rem;
+}
+
+textarea {
+  resize: vertical; 
+}
+
+select {
+  height: 3.2rem;
+  border-radius: 0.4rem;
+}
